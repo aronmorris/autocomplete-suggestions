@@ -1,5 +1,7 @@
 package com.aronmorris.autocompletesuggestions.api;
 
+import com.aronmorris.autocompletesuggestions.model.geoname.GeonameData;
+import com.aronmorris.autocompletesuggestions.model.geoname.GeonameEntry;
 import com.aronmorris.autocompletesuggestions.model.geoname.loader.GeonameFileLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,13 +19,12 @@ public class SuggestionController {
 
     // Adding /v1/ as a versioning method - future API may not call just these attribs.
     @GetMapping(value = "/v1/suggestions")
-    public List<String> getSuggestions(
+    public List<GeonameEntry> getSuggestions(
             @RequestParam String query,
             @RequestParam(required = false) Double latitude,
             @RequestParam(required = false) Double longitude
     ) {
-        GeonameFileLoader loader = new GeonameFileLoader();
-        loader.loadFile();
-        return new ArrayList<>();
+        logger.info("Received request with query \"{}\", latitude {}, longitude {}", query, latitude, longitude);
+        return GeonameData.getGeonameEntries().subList(0, 10);
     }
 }

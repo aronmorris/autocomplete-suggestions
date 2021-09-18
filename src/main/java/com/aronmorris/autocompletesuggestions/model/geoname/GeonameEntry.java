@@ -8,12 +8,14 @@ import java.util.List;
  * if they're ever needed.
  */
 public class GeonameEntry {
-    private String name;
-    private String nameASCII;
-    private List<String> altNames;
-    private double latitude;
-    private double longitude;
-    private long population;
+    private final String name;
+    private final String nameASCII;
+    private final List<String> altNames;
+    private final double latitude;
+    private final double longitude;
+    private final long population;
+    private final String adminDivision;
+    private final String countryCode;
 
     public GeonameEntry(
             String name,
@@ -21,7 +23,9 @@ public class GeonameEntry {
             List<String> altNames,
             double latitude,
             double longitude,
-            long population
+            long population,
+            String adminDivision,
+            String countryCode
     ) {
         this.name = name;
         this.nameASCII = nameASCII;
@@ -29,6 +33,8 @@ public class GeonameEntry {
         this.latitude = latitude;
         this.longitude = longitude;
         this.population = population;
+        this.adminDivision = adminDivision;
+        this.countryCode = countryCode;
     }
 
     public String getName() {
@@ -53,5 +59,13 @@ public class GeonameEntry {
 
     public long getPopulation() {
         return population;
+    }
+
+    public String getAdminDivision() {
+        return adminDivision;
+    }
+
+    public String getCountryCode() {
+        return countryCode;
     }
 }

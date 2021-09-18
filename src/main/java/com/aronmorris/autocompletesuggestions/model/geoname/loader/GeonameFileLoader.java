@@ -18,23 +18,26 @@ import java.util.List;
  * Per Geonames README at https://download.geonames.org/export/dump/
  * The data source for this microservice is the Geonames Cities500 file. This file is provided in
  * tab-delimited text in utf8 encoding. Because reading a file is slow and access to specific
- * items can be clumsy, we load the file's contents here into the data structure of choice
+ * items can be clumsy, we load the file's contents here into a list. Fuzzy match requires that
+ * all items be checked against, so a list is appropriate here.
  */
 public class GeonameFileLoader {
-    final String DATA_FILE_NAME = "src/main/resources/data/cities500.txt";
-    final String FILE_ENCODING = "utf-8";
+    final static String DATA_FILE_NAME = "src/main/resources/data/cities500.txt";
+    final static String FILE_ENCODING = "utf-8";
 
     // from the Geonames README, column numbers, index starts at 0
-    final int INDEX_CITY_NAME = 1;
-    final int INDEX_ASCII_NAME = 2;
-    final int INDEX_ALT_NAMES = 3;
-    final int INDEX_LATITUDE = 4;
-    final int INDEX_LONGITUDE = 5;
-    final int INDEX_POPULATION = 14;
+    final static int INDEX_CITY_NAME = 1;
+    final static int INDEX_ASCII_NAME = 2;
+    final static int INDEX_ALT_NAMES = 3;
+    final static int INDEX_LATITUDE = 4;
+    final static int INDEX_LONGITUDE = 5;
+    final static int INDEX_COUNTRY_CODE = 8;
+    final static int INDEX_ADMIN_DIVISION = 10;
+    final static int INDEX_POPULATION = 14;
 
-    Logger logger = LoggerFactory.getLogger(GeonameFileLoader.class);
+    static Logger logger = LoggerFactory.getLogger(GeonameFileLoader.class);
 
-    public List<GeonameEntry> loadFile() {
+    public static List<GeonameEntry> loadFile() {
         List<GeonameEntry> geoEntries = new ArrayList<>();
 
         try {
@@ -54,8 +57,11 @@ public class GeonameFileLoader {
                                 .setName(entryArray[INDEX_CITY_NAME])
                                 .setNameASCII(entryArray[INDEX_ASCII_NAME])
                                 .setAltNames(Arrays.asList(entryArray[INDEX_ALT_NAMES].split(",")))
-                                .setLatitude(INDEX_LATITUDE).setLongitude(INDEX_LONGITUDE)
-                                .setPopulation(INDEX_POPULATION)
+                                .setLatitude(Double.parseDouble(entryArray[INDEX_LATITUDE]))
+                                .setLongitude(Double.parseDouble(entryArray[INDEX_LONGITUDE]))
+                                .setPopulation(Long.parseLong(entryArray[INDEX_POPULATION]))
+                                .setAdministrativeDivision(entryArray[INDEX_ADMIN_DIVISION])
+                                .setCountryCode(entryArray[INDEX_COUNTRY_CODE])
                                 .createGeonameEntry()
                     );
                 }
