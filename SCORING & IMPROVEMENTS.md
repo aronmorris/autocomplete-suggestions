@@ -30,7 +30,12 @@ query=ondo,
 target=London
 commonChars(ondo, London) => 4
 ```
-This would generalize as the Longest Substring Problem, which has a well-known solution.
+This would generalize as the Longest Substring Problem, which has a well-known solution. Another form of common character
+scoring we could employ is to compare the number of characters in common between query and target, as a percent of their
+common length. It's an autocomplete, so we don't want to return targets that are shorter than the query.
+
+This could also counteract some of the less relevant results that Levenshtein scoring provides by way of ensuring that 
+the character set of the query and target is more similar.
 
 ## Character-Proximity Scoring
 People are imperfect, and keyboard layouts are standardized. With the knowledge of a user's locale it's possible
