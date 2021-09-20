@@ -23,7 +23,6 @@ import java.util.List;
  */
 public class GeonameFileLoader {
     final static String DATA_FILE_NAME = "src/main/resources/data/cities500.txt";
-    final static String FILE_ENCODING = "utf-8";
 
     // from the Geonames README, column numbers, index starts at 0
     final static int INDEX_CITY_NAME = 1;

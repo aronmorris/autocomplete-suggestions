@@ -11,13 +11,12 @@ import java.util.List;
  * Once data is loaded it's immutable, and given the expense of loading it we only want to do it once.
  */
 @Component
-public class GeonameData implements ApplicationListener<ApplicationReadyEvent> {
+public class GeonameData {
 
     private static List<GeonameEntry> geonameEntries;
 
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        geonameEntries = GeonameFileLoader.loadFile();
+    public static void setGeonameEntries(List<GeonameEntry> entries) {
+        geonameEntries = entries;
     }
 
     public static List<GeonameEntry> getGeonameEntries() {
