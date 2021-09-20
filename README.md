@@ -4,11 +4,20 @@ The data is further augmented with the admin1CodesASCII.txt data set, which is u
 administrative divisions, such as US states, Canadian provinces, and so forth.
 
 ## Endpoints
-The only endpoint currently supported is */suggestions*. It takes the following args:
+The only endpoint currently supported is */v1/suggestions*. It takes the following args:
  
 - query: the name of the place to attempt fuzzy match.
 - latitude (optional): GPS latitude, in decimal degrees.
 - longitude (optional): GPS longitude, in decimal degrees.
+
+## Startup & Operation
+The service can be run by cloning or downloading this repository in full, and running `./mvnw spring-boot:run`
+if on a Unix family OS, or `./mvnw.cmd spring-boot:run` if on Windows.
+At this time this service defaults to port 8080, so please ensure other processes are not using it when running,
+or the boot will fail.
+
+The API can be reached, once online, at `localhost:8080/v1/suggestions?query=[place]`. Latitude and Longitude
+are optional arguments. See above for details on accepted contents.
 
 ## Methodology
 
@@ -44,5 +53,5 @@ suggestion.setConfidence(MathHelper.roundValue((suggestion.getConfidence() + gps
 Note that if the coordinate score was -1, the total confidence is reduced to 0 at best.
 
 ### Finally
-The Matcher removes any results below its Confidence threshold, currently set to 0.1, and returns the remaining items.
+The Matcher removes any results below its Confidence threshold, by default set to 0.1, and returns the remaining items.
 If coordinates were provided, this set is usually very small. If not, we can get a very large number of results.
