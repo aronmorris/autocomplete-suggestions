@@ -5,10 +5,14 @@ document identifies ways that the MVP can be improved over time with additional 
 ##The Matcher
 A modification can be made to the Matcher so that instead of defaulting to Levenshtein + coordinate scoring, it instead
 uses better integration with Spring Boot to instantiate more scoring instruments and iteratively modify the confidence
-as each instrument evaluates the object, e.g. factory beans + chain of responsibility pattern. The Suggestion object
+as each instrument evaluates the object, ~~e.g. factory beans + chain of responsibility pattern. The Suggestion object
 itself can be augmented to have not just a `double confidence` but e.g. `stack<tuple<weight, confidence>>` such that 
 it can internally compile all confidence ratings and weights to its overall Confidence score once other operations
-are complete.
+are complete.~~
+
+While not implementing Factory Beans, per se, I have updated the Matcher so it is not tightly coupled to confidence
+grading implementations, and can instead run an arbitrary number of confidence graders against its set of suggestions
+without knowing their implementation details.
 
 ##Alternate Names Set
 The alternate names set in Cities500 provides a list of... alternate names! This is currently used in a somewhat
@@ -48,8 +52,9 @@ more interest. A comparative relative ranking can be established using the most 
 score, and other Londons receiving lower scores based on how much less populous they are than it.
 
 #IMPROVEMENTS
-As mentioned above, this is an MVP and could do with some refining. In particular, I would refine the Matcher to be
-less coupled to the matching instruments as mentioned above in its dedicated section.
+As mentioned above, this is an MVP and could do with some refining. Since writing this document initially, I have
+updated the Matcher to be less coupled to the confidence grading mechanisms it uses and significantly tidied up
+the class.
 
 ##Service QoL Improvements
 The endpoint can be updated to take additional optional arguments, such as a limit to the number of items it will

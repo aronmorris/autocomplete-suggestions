@@ -1,7 +1,7 @@
 package com.aronmorris.autocompletesuggestions.model.admincode;
 
-/** Admin Code POJO. Documentation for why this is needed is in associated Loader class.
- *
+/**
+ * Admin Code POJO. Documentation for why this is needed is in associated Loader class.
  */
 public class AdminCode {
     // file columns in tab-separated values: code, name, name ascii, geonameid

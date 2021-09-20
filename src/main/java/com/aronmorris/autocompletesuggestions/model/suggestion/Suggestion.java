@@ -4,6 +4,7 @@ import com.aronmorris.autocompletesuggestions.model.geoname.GeonameEntry;
 import com.aronmorris.autocompletesuggestions.model.admincode.AdminCodeMap;
 
 import java.util.Locale;
+import java.util.Stack;
 
 /**
  * POJO for Suggestions we want to include in the return to SuggestionController.
@@ -35,7 +36,7 @@ public class Suggestion {
         countryName = new Locale("", entry.getCountryCode()).getDisplayCountry();
         adminDivision = AdminCodeMap.getAdminDivisionName(entry.getAdminDivision(), entry.getCountryCode());
 
-        return entry.getName() + ", " +  adminDivision + ", " + countryName;
+        return entry.getName() + ", " + adminDivision + ", " + countryName;
     }
 
     public String getName() {
@@ -57,7 +58,6 @@ public class Suggestion {
     public double getLongitude() {
         return longitude;
     }
-
 
     public void setLongitude(double longitude) {
         this.longitude = longitude;

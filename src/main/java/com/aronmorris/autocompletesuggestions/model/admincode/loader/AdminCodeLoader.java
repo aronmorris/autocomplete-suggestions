@@ -28,7 +28,7 @@ import java.util.*;
  * 216
  * America/Toronto <- Timezone, mostly useless for name purposes
  * 2019-02-25
- *
+ * <p>
  * As we can see with that data snippet, there's no useful distinction of Top-Level Admin Division: Quebec.
  * However, we can match CountryCode.AdminCode (here CA.10) against the top_level_admin_divisions.txt file
  * to get Quebec and thereby augment the results from "Montreal, 10, CA" to "Montreal, Quebec, CA".

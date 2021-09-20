@@ -53,15 +53,15 @@ public class GeonameFileLoader {
                     entryArray = currLine.split("\t");
                     geoEntries.add(
                             geoBuilder
-                                .setName(entryArray[INDEX_CITY_NAME])
-                                .setNameASCII(entryArray[INDEX_ASCII_NAME])
-                                .setAltNames(Arrays.asList(entryArray[INDEX_ALT_NAMES].split(",")))
-                                .setLatitude(Double.parseDouble(entryArray[INDEX_LATITUDE]))
-                                .setLongitude(Double.parseDouble(entryArray[INDEX_LONGITUDE]))
-                                .setPopulation(Long.parseLong(entryArray[INDEX_POPULATION]))
-                                .setAdministrativeDivision(entryArray[INDEX_ADMIN_DIVISION])
-                                .setCountryCode(entryArray[INDEX_COUNTRY_CODE])
-                                .createGeonameEntry()
+                                    .setName(entryArray[INDEX_CITY_NAME])
+                                    .setNameASCII(entryArray[INDEX_ASCII_NAME])
+                                    .setAltNames(Arrays.asList(entryArray[INDEX_ALT_NAMES].split(",")))
+                                    .setLatitude(Double.parseDouble(entryArray[INDEX_LATITUDE]))
+                                    .setLongitude(Double.parseDouble(entryArray[INDEX_LONGITUDE]))
+                                    .setPopulation(Long.parseLong(entryArray[INDEX_POPULATION]))
+                                    .setAdministrativeDivision(entryArray[INDEX_ADMIN_DIVISION])
+                                    .setCountryCode(entryArray[INDEX_COUNTRY_CODE])
+                                    .createGeonameEntry()
                     );
                 }
             }
