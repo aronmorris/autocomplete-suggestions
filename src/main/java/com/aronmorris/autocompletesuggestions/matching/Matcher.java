@@ -11,13 +11,13 @@ import java.util.Objects;
 import java.util.stream.Collectors;
 
 /**
- * The Matcher is responsible for checking strategy scores from the
+ * The Matcher is responsible for performing the heavy lifting of fuzzy matching. It checks the given query
+ * and calls the various operations that can grade the Geoname data set
  */
 public class Matcher {
 
     public static final double MAX_CONFIDENCE = 1.0;
     public static final double THRESHOLD_CONFIDENCE = 0.1;
-    public static final double MIN_CONFIDENCE = 0.0;
 
     public List<Suggestion> getSuggestions(String query, double latitude, double longitude) {
         List<Suggestion> suggestions = GeonameData.getGeonameEntries().stream()
@@ -33,7 +33,7 @@ public class Matcher {
                 .filter(Objects::nonNull)
                 .collect(Collectors.toList());
         //check that latitude & longitude are bounded in their real ranges
-        if ((latitude <= 90.0 || latitude >= -90.0) && (longitude <= 180.0 || longitude >= -180.0)) {
+        if ((latitude <= 90.0 && latitude >= -90.0) && (longitude <= 180.0 && longitude >= -180.0)) {
             suggestions
                 .forEach(suggestion -> {
                     double gpsScore = HaversineCoordinateDistance.getHaversineDistanceScore(
@@ -42,20 +42,15 @@ public class Matcher {
                             suggestion.getLatitude(),
                             suggestion.getLongitude()
                     );
-                    // Modified Haversine returns 0 if the suggestion's coordinates are out of some bounded range
+                    // Modified Haversine returns -1 if the suggestion's coordinates are out of some bounded range
                     // This lets us flag it for deletion of low confidence items
-                    if (gpsScore == 0) {
-                        suggestion.setConfidence(MIN_CONFIDENCE);
-                    } else {
-                        suggestion.setConfidence(MathHelper.roundValue((suggestion.getConfidence() + gpsScore) / 2));
-                    }
+                    suggestion.setConfidence(MathHelper.roundValue((suggestion.getConfidence() + gpsScore) / 2));
                 });
-            suggestions = suggestions.stream()
-                    .filter(suggestion -> suggestion.getConfidence() > THRESHOLD_CONFIDENCE)
-                    .sorted(Comparator.comparing(Suggestion::getConfidence, Comparator.reverseOrder()))
-                    .collect(Collectors.toList());
         }
-
+        suggestions = suggestions.stream()
+                .filter(suggestion -> suggestion.getConfidence() >= THRESHOLD_CONFIDENCE)
+                .sorted(Comparator.comparing(Suggestion::getConfidence, Comparator.reverseOrder()))
+                .collect(Collectors.toList());
         return suggestions;
     }
     private boolean isAlternateName(String query, List<String> names) {

@@ -14,6 +14,12 @@ public class LevenshteinDistance {
 
     private final static int MAX_EDIT_DISTANCE = 3;
 
+    /**
+     * Returns an overall Confidence of match, where 1.0 is equal confidence, and fuzzier matches are lower.
+     * @param query query string to attempt matching
+     * @param target data string to be matched against
+     * @return the normalized confidence score
+     */
     public static double normalizedDistanceScore(String query, String target) {
         if (query == null || target == null) {
             return 0.0;

@@ -1,5 +1,9 @@
 package com.aronmorris.autocompletesuggestions.matching;
 
+/**
+ * The Haversine Formula is used to calculate the distance between two coordinate points on a sphere.
+ * Conveniently, the Earth is more or less a sphere.
+ */
 public class HaversineCoordinateDistance {
 
     //This constant is future-proof barring something very bad happening
@@ -21,8 +25,8 @@ public class HaversineCoordinateDistance {
             double tLong
     ) {
         double distance = calculateHaversineDistance(qLat, qLong, tLat, tLong);
-
-        return distance > MAX_SEARCH_RADIUS_KM ? 0.0 : (1 - (distance / MAX_SEARCH_RADIUS_KM)); //normalize to a value within 1
+        //normalize to a value within 1
+        return distance > MAX_SEARCH_RADIUS_KM ? -1.0 : (1 - (distance / MAX_SEARCH_RADIUS_KM));
     }
 
     // Implementation of Haversine distance algorithm, which measures distance between 2 sets of coordinates

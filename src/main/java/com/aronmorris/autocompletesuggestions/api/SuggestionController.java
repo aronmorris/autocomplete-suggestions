@@ -10,6 +10,11 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * The policy as I'm familiar with it is for controllers to do as little as possible and offload all possible logic
+ * to the model(s). This controller therefore does very little beyond receive the request, instantiate the matcher,
+ * and send off the compiled list of suggestions.
+ */
 @RestController
 public class SuggestionController {
 
