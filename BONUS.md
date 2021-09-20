@@ -1,4 +1,4 @@
-#API KEYS & BILLING
+# API KEYS & BILLING
 Microservices should follow the principle of single responsibility. So if this microservice for autocompletion 
 suggestions does this, it should also be determining authentication for the purposes of logging API uses.
 
@@ -8,13 +8,13 @@ and if OK'd, log the user and the API service they're requesting to a billing se
 transaction.
 
 
-##Scaling
+## Scaling
 The above approach appears to scale well. The concept of the load balancer is mature, and it can be augmented with API
 gateway behavior. The API gateway is stateless and its operations are not resource-heavy.
 The number of requests is temporarily increased within the network (authentication, billing, resource)
 but each microservice can be on wholly different servers, adding resiliency.
 
-##Model
+## Model
 The timeline of use can be as follows:
 
 1. User requests authorization for a resource.
