@@ -1,21 +1,30 @@
-#Autocompletion API Microservice
+# Autocompletion API Microservice
 This microservice checks queries passed to it for fuzzy matches against the [Geonames Cities500](https://download.geonames.org/export/dump/) data set.
 The data is further augmented with the admin1CodesASCII.txt data set, which is used to find the names of top-level 
 administrative divisions, such as US states, Canadian provinces, and so forth.
 
-##Endpoints
-The only endpoint currently supported is */suggestions*. It takes the following args:
+## Endpoints
+The only endpoint currently supported is */v1/suggestions*. It takes the following args:
  
 - query: the name of the place to attempt fuzzy match.
 - latitude (optional): GPS latitude, in decimal degrees.
 - longitude (optional): GPS longitude, in decimal degrees.
+
+## Startup & Operation
+The service can be run by cloning or downloading this repository in full, and running `./mvnw spring-boot:run`
+if on a Unix family OS, or `./mvnw.cmd spring-boot:run` if on Windows.
+At this time this service defaults to port 8080, so please ensure other processes are not using it when running,
+or the boot will fail.
+
+The API can be reached, once online, at `localhost:8080/v1/suggestions?query=[place]`. Latitude and Longitude
+are optional arguments. See above for details on accepted contents.
 
 ## Methodology
 
 Given that this is a Minimum Viable Product, at this time it implements only a few measures that allow it to perform
 auto-completion and confidence grading. This is done in two steps.
 
-###First
+### First
 On receiving the query, a Confidence Handler Factory creates a configuration of handlers which will perform the actual
 grading operations for each potential match. Handlers are responsible for the following:
 
@@ -44,7 +53,7 @@ assign each possible suggestion a weighted confidence score. Any handler can fla
 by setting its confidence as the ConfidenceHandler::NO_CONFIDENCE score. The Matcher immediately stops evaluating
 these dead ends and they are removed from the resulting set of matches.
 
-###Finally
+### Finally
 The Matcher removes any results below its Confidence threshold, currently set to 0.1, and returns the remaining items
 in sorted order from high confidence to low. If coordinates were provided, this set is usually very small.
 If not, we can get a very large number of results.
